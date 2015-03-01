@@ -3,8 +3,6 @@ package com.itvirtuoso.fpsclock.server;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Server {
     public static void main(String[] args) throws Exception {
@@ -15,9 +13,7 @@ public class Server {
         while (true) {
             Socket socket = listener.accept();
             ThreadClock clock = new ThreadClock(socket);
-            ExecutorService service = Executors.newSingleThreadExecutor();
-            service.execute(clock);
-            service.shutdown();
+            clock.start();
         }
     }
 }

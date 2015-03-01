@@ -7,5 +7,6 @@ public interface ClockListener {
     void onConnectionSuccess();
     void onConnectionFail(Exception e);
     void onDraw(long time);
+    void pong(long time);
     void onConnectionClose();
 }

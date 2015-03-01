@@ -16,7 +16,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="false"
-        android:gravity="center">
+        android:gravity="center"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:text="2015/01/01"
@@ -34,7 +35,24 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:id="@+id/time_text"
-            android:textSize="48sp" />
-    </LinearLayout>
+            android:textSize="48sp"
+            android:layout_marginBottom="64dp" />
 
+        <TextView
+            android:text="time 0 ms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/ping_text"
+            android:textSize="32sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="send PING"
+            android:id="@+id/ping_button"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+    </LinearLayout>
 </RelativeLayout>

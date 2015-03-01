@@ -60,6 +60,12 @@ public class ClockConnection {
         }
     }
 
+    public void ping() throws IOException {
+        ByteBuffer buffer = ByteBuffer.allocate(Long.SIZE / 8);
+        buffer.putLong(System.currentTimeMillis());
+        mSocket.getOutputStream().write(buffer.array());
+    }
+
     public void disconnect() {
         if (mSocket != null) {
             try {
@@ -104,7 +110,7 @@ public class ClockConnection {
         }
 
         private void runInner() throws IOException {
-            byte[] data = new byte[8];
+            byte[] data = new byte[9];
             int index = 0;
             while (true) {
                 int value = mSocket.getInputStream().read();
@@ -112,17 +118,22 @@ public class ClockConnection {
                     break;
                 }
                 data[index++] = (byte) value;
-                if (index < 8) {
+                if (index < 9) {
                     continue;
                 }
                 index = 0;
                 ByteBuffer buffer = ByteBuffer.wrap(data);
+                final byte type = buffer.get();
                 final long time = buffer.getLong();
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
                         for (ClockListener listener : mListeners) {
-                            listener.onDraw(time);
+                            if (type == 0) {
+                                listener.onDraw(time);
+                            } else if (type == 1) {
+                                listener.pong(time);
+                            }
                         }
                     }
                 });
